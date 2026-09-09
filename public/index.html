@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hermes</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="header">
+        <div class="logo">✳</div>
+        <div>
+          <h1>Hermes</h1>
+          <p>your tiny AI assistant</p>
+        </div>
+      </header>
+
+      <section id="chat" class="chat">
+        <div class="msg bot">
+          <div class="bubble">Hi! I'm Hermes. Ask me anything to get started.</div>
+        </div>
+      </section>
+
+      <form id="form" class="composer">
+        <input
+          id="input"
+          type="text"
+          placeholder="Type a message..."
+          autocomplete="off"
+          required
+        />
+        <button type="submit">Send</button>
+      </form>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

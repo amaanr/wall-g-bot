@@ -1,0 +1,23 @@
+{
+  "name": "hermes-bot",
+  "version": "1.0.0",
+  "description": "Hermes — a tiny AI chat bot you can run in minutes and build on top of.",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "ai",
+    "openai",
+    "chatbot",
+    "workshop"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "openai": "^4.77.0"
+  }
+}
