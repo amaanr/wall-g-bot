@@ -14,8 +14,20 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir, platform } from "node:os";
 import { join, delimiter } from "node:path";
 import { execSync } from "node:child_process";
+import dotenv from "dotenv";
 
 const REPO_ENV = new URL("./.env", import.meta.url);
+
+// This script runs two ways:
+//   • `npm run setup`  — you ran it on purpose; show the full friendly guide.
+//   • `npm run dev`    — it runs automatically first (as "predev") to make sure
+//                        things are connected. Stay quiet so we don't drown out
+//                        the web app's own "running!" message or repeat the
+//                        "now run npm run dev" instructions you just followed.
+const QUIET = process.env.npm_lifecycle_event === "predev";
+const say = (...args) => {
+  if (!QUIET) console.log(...args);
+};
 
 // A free, no-sign-up model that answers fast. (The free catalog changes over
 // time; if this one is ever slow or unavailable, see the README for how to
@@ -55,12 +67,7 @@ function hermesHome() {
 // Read an env file into a plain object. Missing file → {}.
 function readEnv(path) {
   if (!existsSync(path)) return {};
-  const out = {};
-  for (const line of readFileSync(path, "utf8").split(/\r?\n/)) {
-    const m = line.match(/^\s*([A-Z0-9_]+)\s*=\s*(.*)\s*$/i);
-    if (m) out[m[1]] = m[2];
-  }
-  return out;
+  return dotenv.parse(readFileSync(path, "utf8"));
 }
 
 // Update ONLY the given keys in an env file, leaving every other line untouched.
@@ -84,11 +91,12 @@ function updateEnvFile(path, updates) {
   writeFileSync(path, result.join("\n"));
 }
 
-console.log("");
-console.log("  Hermes workshop bot — setup");
-console.log("  ---------------------------");
+say("");
+say("  Hermes workshop bot — setup");
+say("  ---------------------------");
 
-// 1. Is Hermes installed?
+// 1. Is Hermes installed?  (This warning is ALWAYS shown — even under predev —
+//    because without Hermes the web app can't work and we must say why.)
 const HOME = hermesHome();
 if (!existsSync(HOME)) {
   console.log("");
@@ -117,11 +125,11 @@ const existingKey =
   hermesEnv.API_SERVER_KEY?.trim() || repoEnv.API_SERVER_KEY?.trim() || "";
 const key = existingKey || `hermes_ws_${randomBytes(24).toString("hex")}`;
 if (existingKey) {
-  console.log("");
-  console.log("  ✓ Reusing the API key that's already set up.");
+  say("");
+  say("  ✓ Reusing the API key that's already set up.");
 } else {
-  console.log("");
-  console.log("  ✓ Generated a new secret key to connect the app to Hermes.");
+  say("");
+  say("  ✓ Generated a new secret key to connect the app to Hermes.");
 }
 
 // 3. Turn on Hermes's API server and save the key into Hermes's own config.
@@ -129,40 +137,46 @@ updateEnvFile(hermesEnvPath, {
   API_SERVER_ENABLED: "true",
   API_SERVER_KEY: key,
 });
-console.log(`  ✓ Enabled Hermes's API server  (${hermesEnvPath})`);
+say(`  ✓ Enabled Hermes's API server  (${hermesEnvPath})`);
 
 // 4. Save the matching settings into this project's .env.
 updateEnvFile(REPO_ENV, {
   HERMES_API_URL: repoEnv.HERMES_API_URL || "http://127.0.0.1:8642/v1",
   API_SERVER_KEY: key,
 });
-console.log(`  ✓ Saved the app's settings     (.env)`);
+say(`  ✓ Saved the app's settings     (.env)`);
 
 // 5. Pick a free, no-sign-up model — but ONLY if you haven't already chosen a
 //    provider. This is what makes it work at home with zero accounts, and it
 //    won't touch the OpenAI setup you'll add at the workshop.
-const providerSet = hermes("config get model.provider").ok;
+const provider = hermes("config get model.provider");
+const providerSet = provider.ok && provider.out && provider.out !== "auto";
 if (providerSet) {
-  console.log("  ✓ Leaving your existing model choice untouched.");
+  say("  ✓ Leaving your existing model choice untouched.");
 } else {
   const p = hermes(`config set model.provider opencode-free`);
   const m = hermes(`config set model.default ${FREE_MODEL}`);
   if (p.ok && m.ok) {
-    console.log(`  ✓ Picked the free model         (${FREE_MODEL})`);
+    say(`  ✓ Picked the free model         (${FREE_MODEL})`);
   } else {
-    console.log("  •  Couldn't auto-pick the free model — do it once by hand:");
-    console.log(`       hermes config set model.provider opencode-free`);
-    console.log(`       hermes config set model.default ${FREE_MODEL}`);
+    console.error("  Couldn't configure the free model. Run these in a new terminal:");
+    console.error("       hermes config set model.provider opencode-free");
+    console.error(`       hermes config set model.default ${FREE_MODEL}`);
+    console.error("  If either command fails, ask a workshop helper before continuing.");
+    process.exit(1);
   }
 }
 
-console.log("");
-console.log("  All set! Start Hermes, then the web app, in two terminals:");
-console.log("");
-console.log("     hermes gateway      ← terminal 1 (leave it running)");
-console.log("     npm run dev         ← terminal 2");
-console.log("");
-console.log("  Then open  http://localhost:3000");
-console.log("");
-console.log("  (First reply can take a few seconds while Hermes wakes up.)");
-console.log("");
+// The closing "now do this next" guide only makes sense when you ran setup on
+// purpose. Under predev, the web app's own startup message takes over from here.
+say("");
+say("  All set! Start Hermes, then the web app, in two terminals:");
+say("");
+say("     hermes gateway      ← terminal 1 (leave it running)");
+say("     npm run dev         ← terminal 2");
+say("  Already started the gateway before setup? Stop it with Ctrl+C and restart it.");
+say("");
+say("  Then open  http://localhost:3000");
+say("");
+say("  (First reply can take a few seconds while Hermes wakes up.)");
+say("");

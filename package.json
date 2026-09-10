@@ -6,6 +6,7 @@
   "main": "server.js",
   "scripts": {
     "setup": "node setup.mjs",
+    "predev": "node setup.mjs",
     "dev": "node server.js",
     "start": "node server.js"
   },
@@ -21,5 +22,8 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "openai": "^4.77.0"
+  },
+  "overrides": {
+    "qs": "^6.16.0"
   }
 }

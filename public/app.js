@@ -7,7 +7,9 @@ const input = document.getElementById("input");
 const button = form.querySelector("button");
 const banner = document.getElementById("banner");
 
-// On load, check whether Hermes is awake and show a hint if it isn't.
+// Is Hermes awake? Show the hint bar when it isn't. We keep checking on a timer
+// so that once you start `hermes gateway` in the other terminal, the bar clears
+// itself — you don't have to watch the log or reload the page.
 async function checkHermes() {
   try {
     const res = await fetch("/api/health");
@@ -18,13 +20,27 @@ async function checkHermes() {
   }
 }
 checkHermes();
+// Keep checking every 4s: the bar disappears on its own once Hermes is ready,
+// and comes back if it ever stops — no reloading needed.
+setInterval(checkHermes, 4000);
 
-// Add a message bubble to the screen.
-function addMessage(text, who) {
+// Add a message bubble to the screen. Bot messages get a little ✳ avatar so
+// they match the welcome message. `text` is set with textContent, so anything
+// Hermes replies is shown safely as plain text (no HTML surprises).
+function addMessage(text, who, { thinking = false } = {}) {
   const msg = document.createElement("div");
-  msg.className = `msg ${who}`;
-  msg.innerHTML = `<div class="bubble"></div>`;
-  msg.querySelector(".bubble").textContent = text;
+  msg.className = `msg ${who}${thinking ? " thinking" : ""}`;
+  if (who === "bot") {
+    const avatar = document.createElement("div");
+    avatar.className = "avatar";
+    avatar.setAttribute("aria-hidden", "true");
+    avatar.textContent = "✳";
+    msg.appendChild(avatar);
+  }
+  const bubble = document.createElement("div");
+  bubble.className = "bubble";
+  bubble.textContent = text;
+  msg.appendChild(bubble);
   chat.appendChild(msg);
   chat.scrollTop = chat.scrollHeight;
   return msg;
@@ -40,7 +56,7 @@ form.addEventListener("submit", async (event) => {
   input.value = "";
   button.disabled = true;
 
-  const thinking = addMessage("…", "bot");
+  const thinking = addMessage("● ● ●", "bot", { thinking: true });
 
   try {
     const response = await fetch("/api/chat", {
@@ -49,10 +65,12 @@ form.addEventListener("submit", async (event) => {
       body: JSON.stringify({ message }),
     });
     const data = await response.json();
+    thinking.classList.remove("thinking");
     thinking.querySelector(".bubble").textContent = data.reply;
     // If that worked, Hermes is clearly up — hide the warning banner.
     if (response.ok) banner.hidden = true;
   } catch (error) {
+    thinking.classList.remove("thinking");
     thinking.querySelector(".bubble").textContent =
       "Sorry, I couldn't reach the server. Is it still running?";
   } finally {
