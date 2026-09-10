@@ -167,6 +167,17 @@ if (providerSet) {
   }
 }
 
+// 6. Quiet one recurring error. Hermes tries to auto-name each chat using a
+//    small side model; our web app never shows those names, and at home that
+//    call routes to a provider you haven't set up, so `hermes gateway` prints a
+//    "Title generation failed" error on every message. Turning it off removes
+//    that noise. Safe to run repeatedly; if it doesn't stick it's not fatal —
+//    the app still works, so we don't stop setup over it.
+const t = hermes("config set auxiliary.title_generation.enabled false");
+if (t.ok) {
+  say("  ✓ Turned off an unused feature that logged errors each message.");
+}
+
 // The closing "now do this next" guide only makes sense when you ran setup on
 // purpose. Under predev, the web app's own startup message takes over from here.
 say("");
