@@ -5,6 +5,19 @@ const chat = document.getElementById("chat");
 const form = document.getElementById("form");
 const input = document.getElementById("input");
 const button = form.querySelector("button");
+const banner = document.getElementById("banner");
+
+// On load, check whether Hermes is awake and show a hint if it isn't.
+async function checkHermes() {
+  try {
+    const res = await fetch("/api/health");
+    const data = await res.json();
+    banner.hidden = data.hermes === "up";
+  } catch {
+    banner.hidden = false;
+  }
+}
+checkHermes();
 
 // Add a message bubble to the screen.
 function addMessage(text, who) {
@@ -37,6 +50,8 @@ form.addEventListener("submit", async (event) => {
     });
     const data = await response.json();
     thinking.querySelector(".bubble").textContent = data.reply;
+    // If that worked, Hermes is clearly up — hide the warning banner.
+    if (response.ok) banner.hidden = true;
   } catch (error) {
     thinking.querySelector(".bubble").textContent =
       "Sorry, I couldn't reach the server. Is it still running?";

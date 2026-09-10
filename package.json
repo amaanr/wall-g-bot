@@ -1,16 +1,18 @@
 {
-  "name": "hermes-bot",
-  "version": "1.0.0",
-  "description": "Hermes — a tiny AI chat bot you can run in minutes and build on top of.",
+  "name": "hermes-workshop-bot",
+  "version": "2.0.0",
+  "description": "A web chat UI for your own local Hermes agent — the workshop starter you clone and build on.",
   "type": "module",
   "main": "server.js",
   "scripts": {
+    "setup": "node setup.mjs",
     "dev": "node server.js",
     "start": "node server.js"
   },
   "keywords": [
     "ai",
-    "openai",
+    "hermes",
+    "agent",
     "chatbot",
     "workshop"
   ],
