@@ -3,10 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#17191c" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#9e3b28" />
     <title>WALL-G | Your space to think</title>
-    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="assets/wall-g-64.png" type="image/png" />
     <link rel="stylesheet" href="style.css" />
     <script src="/vendor/highlight/highlight.min.js" defer></script>
     <script src="app.js" type="module"></script>
@@ -43,8 +42,16 @@
     <div class="app-shell">
       <aside id="sidebar" class="sidebar" aria-label="Conversations">
         <div class="sidebar-brand">
-          <a class="wordmark" href="/" aria-label="WALL-G home"><span class="brand-mark" aria-hidden="true">w<span>.</span></span>WALL-G</a>
+          <a class="wordmark" href="https://ipn-ai-youth-summit-guide.zainpunjwani.chatgpt.site/" target="_blank" rel="noopener noreferrer" aria-label="Open the IPN AI Youth Summit conference guide"><img src="assets/summit-logo-ink.png" alt="IPN AI Youth Summit 2026" width="400" height="128" /></a>
           <button id="close-sidebar" class="icon-button" aria-label="Close sidebar" title="Close sidebar"><svg><use href="#i-panel"/></svg></button>
+        </div>
+        <div class="sidebar-hero">
+          <p class="sidebar-name">wall-g</p>
+          <p class="sidebar-tag"><span class="tag-dot" aria-hidden="true"></span>Directive: build with you</p>
+          <figure class="device">
+            <img class="sidebar-character" src="assets/wall-g.png" alt="WALL-G, your AI assistant" width="512" height="512" />
+            <span class="device-belt" aria-hidden="true"><span class="belt-run">░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒</span></span>
+          </figure>
         </div>
         <button id="new-chat" class="new-chat"><svg><use href="#i-plus"/></svg>New conversation<span class="shortcut" aria-hidden="true">N</span></button>
         <label class="chat-search"><svg aria-hidden="true"><use href="#i-search"/></svg><input id="search" type="search" placeholder="Search conversations" aria-label="Search conversations" autocomplete="off"/><kbd aria-hidden="true">/</kbd></label>
@@ -52,7 +59,7 @@
         <nav id="history" class="history" aria-label="Saved conversations"></nav>
         <div class="sidebar-bottom">
           <a class="guide-link" href="https://hermes-workshop-guide.vercel.app/" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-code"/></svg><span>Build with AI<span class="secondary">The workshop field guide</span></span><svg class="tiny-icon" aria-hidden="true"><use href="#i-external"/></svg></a>
-          <button id="about" class="workspace-info"><span class="workspace-icon" aria-hidden="true">W</span><span>Your workspace<span class="secondary">Powered by your local Hermes</span></span><svg aria-hidden="true"><use href="#i-info"/></svg></button>
+          <button id="about" class="workspace-info"><span class="workspace-icon" aria-hidden="true"><img src="assets/wall-g-64.png" alt="" width="32" height="32" /></span><span>Your workspace<span class="secondary">Powered by your local Hermes</span></span><svg aria-hidden="true"><use href="#i-info"/></svg></button>
         </div>
       </aside>
       <button id="sidebar-backdrop" class="sidebar-backdrop" aria-label="Close conversations" hidden></button>
@@ -66,12 +73,12 @@
 
         <section id="chat" class="chat-scroll" aria-label="Chat messages" tabindex="0">
           <div id="welcome" class="welcome">
-            <div class="welcome-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-            <p class="eyebrow">A LITTLE CURIOSITY GOES A LONG WAY</p>
+            <div class="welcome-mark" aria-hidden="true"><img src="assets/wall-g.png" alt="" width="92" height="92" /></div>
+            <p class="eyebrow">A little curiosity goes a long way</p>
             <h2>Big ideas.<br/>Meet <span>WALL-G.</span></h2>
             <p class="welcome-description">Your space to think out loud, figure things out,<br class="desktop-break"/> and make something of your own.</p>
             <div class="suggestions">
-              <button data-prompt="Help me brainstorm a creative project I can build with AI. Ask me about my interests first."><span class="suggestion-icon mint"><svg><use href="#i-spark"/></svg></span><span>Make something new<span class="secondary">Find your next big idea</span></span><span class="suggestion-arrow" aria-hidden="true">&#8599;</span></button>
+              <button data-prompt="Help me brainstorm a creative project I can build with AI. Ask me about my interests first."><span class="suggestion-icon"><svg><use href="#i-spark"/></svg></span><span>Make something new<span class="secondary">Find your next big idea</span></span><span class="suggestion-arrow" aria-hidden="true">&#8599;</span></button>
               <button data-prompt="Explain how this chat app works, from my browser to the local Hermes agent. Keep it beginner-friendly."><span class="suggestion-icon blue"><svg><use href="#i-code"/></svg></span><span>Go behind the scenes<span class="secondary">Understand how this works</span></span><span class="suggestion-arrow" aria-hidden="true">&#8599;</span></button>
               <button data-prompt="I want to learn something interesting today. Ask me what I am curious about and help me explore it."><span class="suggestion-icon peach"><svg><use href="#i-compass"/></svg></span><span>Follow your curiosity<span class="secondary">Take an idea a little further</span></span><span class="suggestion-arrow" aria-hidden="true">&#8599;</span></button>
               <button id="suggest-file"><span class="suggestion-icon lilac"><svg><use href="#i-file"/></svg></span><span>Get a fresh perspective<span class="secondary">Drop a file. Let's unpack it.</span></span><span class="suggestion-arrow" aria-hidden="true">&#8599;</span></button>

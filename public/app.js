@@ -217,10 +217,12 @@ function makeMessage(message, animate = false) {
   article.setAttribute("aria-label", message.role === "user" ? "You" : "WALL-G");
   if (message.role === "assistant") {
     const head = element("div", "message-head");
-    const mark = element("span", "brand-mark", "w");
-    mark.setAttribute("aria-hidden", "true");
-    mark.append(element("span", "", "."));
-    head.append(mark, element("span", "", "WALL-G"), element("span", "message-time", new Date(message.createdAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })));
+    const avatar = document.createElement("img");
+    avatar.className = "message-avatar";
+    avatar.src = "assets/wall-g-64.png";
+    avatar.alt = "";
+    avatar.width = avatar.height = 28;
+    head.append(avatar, element("span", "name", "WALL-G"), element("span", "message-time", new Date(message.createdAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })));
     article.append(head, element("div", "tool-activity"));
   }
   if (message.attachments?.length) {
