@@ -2,8 +2,8 @@
 
 WALL-G is the web client for your local **Hermes** agent. This is the starting
 point for the workshop: get it running as-is, then use an AI coding IDE to make
-it your own. The engine is still Hermes, the repository is still `hermes-bot`,
-and terminal commands still start with `hermes`.
+it your own. The engine is still Hermes, the repository is `wall-g-bot`, and
+terminal commands still start with `hermes`.
 
 **A local agent does not mean an offline AI model.** Hermes runs on your
 computer, but the default chat models run with online AI providers. When you
@@ -58,14 +58,12 @@ reply in your browser before marking your setup complete.
 
 Once Hermes is installed, this part is quick.
 
-The starter repository is private. Sign into GitHub and accept your workshop
-invitation before cloning. If you see a 404, ask a facilitator for access.
 On Windows, use `npm.cmd` wherever the commands below say `npm`.
 
 ```bash
 # 1. Get the code
-git clone https://github.com/amaanr/hermes-bot.git
-cd hermes-bot
+git clone https://github.com/amaanr/wall-g-bot.git
+cd wall-g-bot
 
 # 2. Install the web app's pieces
 npm install
@@ -82,7 +80,7 @@ hermes gateway
 ```
 
 Open a **second** terminal for the web app. Type `cd ` (with a space), drag your
-`hermes-bot` folder into the window, and press Enter. Both terminals should be
+`wall-g-bot` folder into the window, and press Enter. Both terminals should be
 inside that same folder.
 
 ```bash
