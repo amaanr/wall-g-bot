@@ -9,6 +9,7 @@
     "predev": "node setup.mjs",
     "dev": "node server.js",
     "start": "node server.js",
+    "capabilities": "node capabilities.mjs",
     "test": "node --test test/*.test.mjs"
   },
   "engines": { "node": ">=22.13.0" },

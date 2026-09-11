@@ -134,6 +134,84 @@ chat-model usage still follows the selected provider's pricing.
 
 ---
 
+## What WALL-G can already do (no extra setup)
+
+Out of the box, after `npm run setup`, your WALL-G can already use a big chunk of
+Hermes. These are on by default — just ask in the chat:
+
+- **Research the web** — "look up X and summarize it with sources."
+- **Read a page** — "open this URL and tell me what it says."
+- **Make images and diagrams** — "draw me a poster for a robotics club."
+- **Write and run code** — "make a p5js animation of bouncing balls."
+- **Look at your uploads** — attach a PDF or image and ask about it.
+- **Remember across chats** — it keeps its own memory and past sessions.
+- **Use your computer** — open Calendar and read your week, or drive a browser to
+  a website (one small permission step on macOS — see below).
+- **62 built-in skills** — research papers, documents, infographics, and more.
+
+Most of that needs no keys and no permissions. The one exception is computer use,
+which needs a quick approval the first time.
+
+---
+
+## Computer use: let WALL-G open apps and browse for you
+
+`npm run setup` turns this on for you. WALL-G can open Calendar and tell you your
+week, or drive a browser to a website — right from the chat. Two small things
+finish the setup:
+
+**1. Approve the permission (macOS only, one time).**
+
+```bash
+npm run capabilities -- --grant   # opens the permission screen for you
+```
+
+In System Settings → Privacy & Security, turn ON **Accessibility** *and* **Screen
+Recording** for **CuaDriver**. Re-run `npm run capabilities` to confirm both are
+granted. (Windows/Linux: nothing to approve — skip this.)
+
+**2. Restart Hermes so it picks up the change.** Press Ctrl+C in the
+`hermes gateway` terminal, then run `hermes gateway` again. A gateway that was
+already running won't notice until you restart it — this is the #1 thing people
+forget.
+
+Then try, right in the chat:
+
+> Open Calendar and tell me what I've got this week.
+>
+> Open twitter.com in the browser and compose a post that says hello — then save
+> it as a draft, don't post it.
+
+Read what's **on the screen** to judge the result — the play-by-play WALL-G types
+isn't always perfectly accurate.
+
+### Please read this — it's powerful
+
+- **WALL-G can see your screen and click real apps.** Keep the web app on
+  `localhost` — never expose it to the internet — and only run it on a machine
+  you're comfortable letting it drive.
+- **At the workshop we share one OpenAI key.** That's fine for chatting, and it
+  also means the shared bot can control *your* laptop when you ask it to. Run it
+  on your own machine and watch what it does.
+- **It never enters passwords or 2FA.** If it hits a login screen it should stop.
+  For the Twitter demo, log into a throwaway account yourself first.
+- **Turn it off anytime:** `hermes tools disable computer_use --platform api_server`,
+  then restart the gateway.
+
+### Optional helper tools for a few skills
+
+```bash
+npm run capabilities -- --mac-skills   # Reminders, Notes, iMessage CLIs (macOS)
+npm run capabilities -- --xurl         # official X/Twitter CLI (then run `xurl auth`)
+npm run capabilities -- --all          # grant + mac-skills + xurl
+```
+
+For a Twitter demo, the most visual option needs **no API key** at all: just ask
+WALL-G to open twitter.com in the browser. `--xurl` is only if you'd rather use
+the official API.
+
+---
+
 ## Using WALL-G
 
 - **Real streaming:** replies arrive incrementally from Hermes, not as a typing
@@ -234,6 +312,7 @@ sensitive files, and check your provider's retention policy.
 | `server.js` | Local backend: Hermes sessions, streaming, and connection checks. |
 | `server-attachments.js` | Private uploads, file validation, and local PDF/text extraction. |
 | `setup.mjs` | One-time setup that connects the web app to Hermes. |
+| `capabilities.mjs` | Grants the macOS permission for computer use, plus optional helper tools. |
 | `public/index.html` | The chat page you see in the browser. |
 | `public/style.css` | The colors and layout. |
 | `public/app.js` | Conversations, browser storage, attachments, and chat controls. |
@@ -265,3 +344,6 @@ not change your actual Hermes configuration. On Windows, use `npm.cmd test`.
 - Add your own Hermes **skill** for a repeatable task, or connect a tool you want
   it to use.
 - Customize the starter prompts in `public/index.html` for your interests.
+- **Try computer use:** after the one-time `npm run capabilities -- --grant`
+  approval (see "Computer use" above), ask WALL-G to open an app for you. Powerful
+  — read the safety notes first, and use your own machine.

@@ -7,6 +7,8 @@
 //   4. Saves the same key into this project's .env file.
 //   5. Sets up the model ladder: OpenAI first if a key is present, with free
 //      no-sign-up models as automatic fallbacks (and as the primary at home).
+//   6. Turns on "computer use" so WALL-G can open apps and drive the browser
+//      right from the web chat (macOS still needs a one-time permission approval).
 //
 // After this, run `hermes gateway` in one terminal and `npm run dev` in another.
 
@@ -257,7 +259,40 @@ if (!managedProviders.has(currentProvider)) {
   }
 }
 
-// 6. Quiet one recurring error. Hermes tries to auto-name each chat using a
+// 6. Turn on "computer use" so WALL-G can actually DO things — open Calendar and
+//    read your week, drive a browser to a website, click real apps — right from
+//    the web chat. Two things have to line up, and we handle both here:
+//
+//      a) The toolset has to be enabled on the `api_server` platform — the one
+//         the web app talks to. Hermes ships computer-use ON for its own
+//         terminal but OFF for api_server, so without this the web chat can't
+//         drive the desktop. Enabling is instant, offline, and idempotent, so we
+//         always (re)assert it — including on the quiet predev run.
+//
+//      b) A small helper (cua-driver) has to be installed. That can touch the
+//         network, so we only fetch it during a deliberate `npm run setup`, and
+//         only when it's actually missing. `npm run dev` never triggers a
+//         download.
+//
+//    This is best-effort: chatting works without it, so a hiccup here never
+//    stops setup. macOS also needs a one-time permission approval the first time
+//    WALL-G tries to use the screen — the README explains that in one step.
+hermes(`tools enable computer_use --platform api_server`);
+if (!QUIET) {
+  const driver = hermes("computer-use status");
+  const hasDriver = driver.ok && /cua-driver\s+\d/i.test(driver.out);
+  if (!hasDriver) {
+    say("  … Installing the helper that lets WALL-G use your computer (one time).");
+    hermes("computer-use install");
+  }
+  say("  ✓ Turned on computer use — WALL-G can open apps and browse for you.");
+  if (platform() === "darwin") {
+    say("    (First time only: macOS will ask you to allow Accessibility +");
+    say("     Screen Recording for CuaDriver — see the README.)");
+  }
+}
+
+// 7. Quiet one recurring error. Hermes tries to auto-name each chat using a
 //    small side model; our web app never shows those names, and at home that
 //    call routes to a provider you haven't set up, so `hermes gateway` prints a
 //    "Title generation failed" error on every message. Turning it off removes
