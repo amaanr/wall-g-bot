@@ -2,100 +2,135 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#1f4f47" />
-    <title>Hermes · Build with AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#17191c" />
+    <meta name="color-scheme" content="dark" />
+    <title>WALL-G | Your space to think</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
     <link rel="stylesheet" href="style.css" />
+    <script src="/vendor/highlight/highlight.min.js" defer></script>
+    <script src="app.js" type="module"></script>
   </head>
   <body>
-    <main class="app">
-      <header class="header">
-        <div class="brand">
-          <span class="mark" aria-hidden="true">
-            <svg viewBox="0 0 64 64" width="26" height="26">
-              <path
-                d="m26 19-13 13 13 13m12-26 13 13-13 13"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </span>
-          <div class="brand-text">
-            <h1>Hermes</h1>
-            <p>Running on your own laptop</p>
+    <a class="skip-link" href="#input">Skip to message</a>
+    <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 11 11 0 0 1-4-.8L3 21l1.5-4.5A9 9 0 1 1 21 11.5Z"/></symbol>
+      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+      <symbol id="i-panel" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"/></symbol>
+      <symbol id="i-arrow-down" viewBox="0 0 24 24"><path d="M12 5v14m-6-6 6 6 6-6"/></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+      <symbol id="i-clip" viewBox="0 0 24 24"><path d="m8 13 7-7a3 3 0 0 1 4 4l-9 9a5 5 0 0 1-7-7l9-9m-4 10 7-7"/></symbol>
+      <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3m-4 0h8"/></symbol>
+      <symbol id="i-wave" viewBox="0 0 24 24"><path d="M4 10v4m4-8v12m4-15v18m4-15v12m4-8v4"/></symbol>
+      <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9Zm0 0v6h6M8 13h8m-8 4h5"/></symbol>
+      <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18"/></symbol>
+      <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3 2.3 6.7L21 12l-6.7 2.3L12 21l-2.3-6.7L3 12l6.7-2.3Z"/></symbol>
+      <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m16 8-2 6-6 2 2-6Z"/></symbol>
+      <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></symbol>
+      <symbol id="i-volume" viewBox="0 0 24 24"><path d="M11 4 5 9H2v6h3l6 5Zm4 4a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+      <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></symbol>
+      <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 3h7v7M10 14 21 3M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5"/></symbol>
+      <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7m4-7v7"/></symbol>
+      <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
+      <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v.1"/></symbol>
+      <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor" stroke="none"/></symbol>
+      <symbol id="i-edit" viewBox="0 0 24 24"><path d="m16 3 5 5-12 12-6 1 1-6ZM13 6l5 5"/></symbol>
+    </svg>
+
+    <div class="app-shell">
+      <aside id="sidebar" class="sidebar" aria-label="Conversations">
+        <div class="sidebar-brand">
+          <a class="wordmark" href="/" aria-label="WALL-G home"><span class="brand-mark" aria-hidden="true">w<span>.</span></span>WALL-G</a>
+          <button id="close-sidebar" class="icon-button" aria-label="Close sidebar" title="Close sidebar"><svg><use href="#i-panel"/></svg></button>
+        </div>
+        <button id="new-chat" class="new-chat"><svg><use href="#i-plus"/></svg>New conversation<span class="shortcut" aria-hidden="true">N</span></button>
+        <label class="chat-search"><svg aria-hidden="true"><use href="#i-search"/></svg><input id="search" type="search" placeholder="Search conversations" aria-label="Search conversations" autocomplete="off"/><kbd aria-hidden="true">/</kbd></label>
+        <div class="history-heading">YOUR CONVERSATIONS<span id="chat-count">0</span></div>
+        <nav id="history" class="history" aria-label="Saved conversations"></nav>
+        <div class="sidebar-bottom">
+          <a class="guide-link" href="https://hermes-workshop-guide.vercel.app/" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-code"/></svg><span>Build with AI<span class="secondary">The workshop field guide</span></span><svg class="tiny-icon" aria-hidden="true"><use href="#i-external"/></svg></a>
+          <button id="about" class="workspace-info"><span class="workspace-icon" aria-hidden="true">W</span><span>Your workspace<span class="secondary">Powered by your local Hermes</span></span><svg aria-hidden="true"><use href="#i-info"/></svg></button>
+        </div>
+      </aside>
+      <button id="sidebar-backdrop" class="sidebar-backdrop" aria-label="Close conversations" hidden></button>
+
+      <main id="main" class="workspace">
+        <header class="chat-header">
+          <div class="header-start"><button id="open-sidebar" class="icon-button" aria-label="Open sidebar" aria-controls="sidebar" aria-expanded="true" title="Toggle sidebar"><svg><use href="#i-panel"/></svg></button><h1 id="conversation-title">New conversation</h1></div>
+          <div class="header-end"><span id="connection" class="connection" title="Checking the local Hermes gateway"><span class="status-dot"></span><span id="connection-text">Connecting</span></span><span class="header-divider"></span><button id="mobile-new-chat" class="icon-button" aria-label="New conversation" title="New conversation"><svg><use href="#i-edit"/></svg></button><details id="chat-menu" class="chat-menu"><summary class="icon-button" aria-label="Conversation options" title="Conversation options"><svg><use href="#i-more"/></svg></summary><div class="menu-panel"><button id="rename-chat"><svg><use href="#i-edit"/></svg>Rename</button><button id="export-chat"><svg><use href="#i-download"/></svg>Export Markdown</button><button id="delete-chat" class="danger"><svg><use href="#i-trash"/></svg>Delete from browser</button></div></details></div>
+        </header>
+        <div id="banner" class="connection-banner" hidden><span class="status-dot"></span><span>Start <code>hermes gateway</code> in another terminal to connect WALL-G.</span><button id="retry-connection" class="text-button">Check again</button></div>
+
+        <section id="chat" class="chat-scroll" aria-label="Chat messages" tabindex="0">
+          <div id="welcome" class="welcome">
+            <div class="welcome-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+            <p class="eyebrow">A LITTLE CURIOSITY GOES A LONG WAY</p>
+            <h2>Big ideas.<br/>Meet <span>WALL-G.</span></h2>
+            <p class="welcome-description">Your space to think out loud, figure things out,<br class="desktop-break"/> and make something of your own.</p>
+            <div class="suggestions">
+              <button data-prompt="Help me brainstorm a creative project I can build with AI. Ask me about my interests first."><span class="suggestion-icon mint"><svg><use href="#i-spark"/></svg></span><span>Make something new<span class="secondary">Find your next big idea</span></span><span class="suggestion-arrow" aria-hidden="true">&#8599;</span></button>
+              <button data-prompt="Explain how this chat app works, from my browser to the local Hermes agent. Keep it beginner-friendly."><span class="suggestion-icon blue"><svg><use href="#i-code"/></svg></span><span>Go behind the scenes<span class="secondary">Understand how this works</span></span><span class="suggestion-arrow" aria-hidden="true">&#8599;</span></button>
+              <button data-prompt="I want to learn something interesting today. Ask me what I am curious about and help me explore it."><span class="suggestion-icon peach"><svg><use href="#i-compass"/></svg></span><span>Follow your curiosity<span class="secondary">Take an idea a little further</span></span><span class="suggestion-arrow" aria-hidden="true">&#8599;</span></button>
+              <button id="suggest-file"><span class="suggestion-icon lilac"><svg><use href="#i-file"/></svg></span><span>Get a fresh perspective<span class="secondary">Drop a file. Let's unpack it.</span></span><span class="suggestion-arrow" aria-hidden="true">&#8599;</span></button>
+            </div>
           </div>
+          <div id="messages" class="messages"></div>
+        </section>
+
+        <div class="composer-area">
+          <button id="jump-latest" class="jump-latest" hidden><svg><use href="#i-arrow-down"/></svg>Back to latest</button>
+          <div id="voice-strip" class="voice-strip" hidden><span class="voice-indicator" aria-hidden="true"></span><span id="voice-strip-text">Listening...</span><button id="voice-finish" class="text-button">Finish</button><button id="voice-cancel" class="icon-button" aria-label="Cancel voice input"><svg><use href="#i-close"/></svg></button></div>
+          <form id="form" class="composer">
+            <div id="attachments" class="attachments" aria-label="Attached files" hidden></div>
+            <label class="sr-only" for="input">Message WALL-G</label>
+            <textarea id="input" rows="1" aria-label="Message WALL-G" placeholder="Ask anything, or dream up something..." maxlength="32000" autocomplete="off" spellcheck="true"></textarea>
+            <div class="composer-toolbar">
+              <div class="composer-left"><button id="attach" type="button" class="icon-button" aria-label="Attach files or images" title="Attach files or images"><svg><use href="#i-plus"/></svg></button><span class="composer-hint">A thought, a file, a possibility.</span></div>
+              <div class="composer-right"><button id="dictate" type="button" class="icon-button" aria-label="Dictate with local Whisper" title="Dictate with local Whisper"><svg><use href="#i-mic"/></svg></button><button id="voice-chat" type="button" class="voice-button" aria-label="Start voice chat"><svg><use href="#i-wave"/></svg><span>Let's talk</span></button><button id="send" type="submit" class="send-button" aria-label="Send message" title="Send message" disabled><svg><use href="#i-arrow"/></svg></button><button id="stop" type="button" class="send-button stop-button" aria-label="Stop generating" title="Stop generating" hidden><svg><use href="#i-stop"/></svg></button></div>
+            </div>
+          </form>
+          <div class="composer-footnote"><span>WALL-G can make mistakes. Stay curious, check the details.</span><button id="privacy" class="privacy-link">Your data &amp; privacy<svg><use href="#i-info"/></svg></button></div>
         </div>
-        <a
-          class="summit-tag"
-          href="https://hermes-workshop-guide.vercel.app/"
-          target="_blank"
-          rel="noopener"
-        >
-          <img src="assets/summit-logo-white.png" alt="IPN AI Youth Summit 2026" />
-        </a>
-      </header>
+      </main>
+    </div>
 
-      <div id="banner" class="banner" hidden>
-        <svg class="banner-icon" viewBox="0 0 24 24" aria-hidden="true">
-          <circle cx="12" cy="12" r="9" />
-          <path d="M12 8v5m0 3v.1" />
-        </svg>
-        <div>
-          <strong>Waiting for Hermes…</strong> In another terminal, run
-          <code>hermes gateway</code> and give it a few seconds to warm up. It
-          prints a lot of startup text — that's normal. This bar clears itself
-          the moment it's ready; no need to reload.
-        </div>
-      </div>
+    <input id="file-input" type="file" multiple hidden accept="image/png,image/jpeg,image/webp,image/gif,.pdf,.txt,.md,.markdown,.csv,.tsv,.json,.jsonl,.yaml,.yml,.toml,.js,.jsx,.ts,.tsx,.py,.html,.css,.sql,.log,.xml,.sh,.go,.rs,.java,.c,.cpp,.h,.ipynb,.wav,.mp3,.m4a,.ogg,.webm,.flac"/>
+    <div id="drop-zone" class="drop-zone" hidden><div><svg><use href="#i-clip"/></svg><h2>A little more context?</h2><p>Drop files, images, or audio here.</p><span>Files up to 10 MB. Images up to 4 MB. Audio transcribed locally.</span></div></div>
+    <div id="toast" class="toast" role="status" hidden></div>
+    <p id="announcer" class="sr-only" role="status" aria-live="polite"></p>
 
-      <section id="chat" class="chat" aria-live="polite">
-        <div class="msg bot">
-          <div class="avatar" aria-hidden="true">✳</div>
-          <div class="bubble">
-            Hi! I'm <strong>Hermes</strong>, running right on your computer.
-            Ask me anything to get started — and try editing
-            <code>SOUL.md</code> to change my personality.
-          </div>
-        </div>
-      </section>
+    <dialog id="voice-dialog" class="voice-dialog" aria-labelledby="voice-title">
+      <button id="close-voice" class="icon-button dialog-close" aria-label="Close voice chat"><svg><use href="#i-close"/></svg></button>
+      <span class="local-label"><span class="status-dot"></span>ON-DEVICE VOICE</span>
+      <div id="voice-orb" class="voice-orb" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+      <h2 id="voice-title">Think out loud.</h2>
+      <p id="voice-description">OpenAI's open-source Whisper transcribes on your device. No speech API, no account, no extra cost.</p>
+      <p id="voice-detail" class="voice-detail">First use downloads about 100 MB of model files. After that, they're cached in this browser.</p>
+      <progress id="voice-progress" max="100" value="0" aria-label="Downloading Whisper" hidden></progress>
+      <p id="voice-transcript" class="voice-transcript" hidden></p>
+      <button id="voice-action" class="primary-button"><svg><use href="#i-download"/></svg><span>Enable local voice</span></button>
+      <p class="voice-privacy">Audio stays here. In voice chat, finishing a recording sends its transcript to your chat model. Replies use installed local device voices.</p>
+    </dialog>
 
-      <form id="form" class="composer">
-        <input
-          id="input"
-          type="text"
-          placeholder="Message Hermes…"
-          autocomplete="off"
-          required
-        />
-        <button type="submit" aria-label="Send message">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M5 12h14m-6-6 6 6-6 6" />
-          </svg>
-        </button>
-      </form>
+    <dialog id="info-dialog" class="info-dialog" aria-labelledby="info-title">
+      <button class="icon-button dialog-close" data-close="info-dialog" aria-label="Close information"><svg><use href="#i-close"/></svg></button>
+      <span class="eyebrow">YOUR WORKSPACE, EXPLAINED</span><h2 id="info-title">Yours to build on.</h2>
+      <p>WALL-G is the face. <strong>Hermes is the engine.</strong> Your agent runs on this laptop; its selected AI model may run with an online provider.</p>
+      <div class="info-row"><svg><use href="#i-chat"/></svg><div><h3>Conversations that pick up where you left off</h3><p>Chat history is saved in this browser and in Hermes. Deleting a chat here does not erase Hermes memory or provider records.</p></div></div>
+      <div class="info-row"><svg><use href="#i-clip"/></svg><div><h3>Files with a little more context</h3><p>PDFs and text are read locally. Files are saved in the project's <code>.local/uploads</code> folder. Extracted text and image content go to your configured model when you send. Image understanding depends on its vision support. Scanned PDFs need OCR first.</p></div></div>
+      <div class="info-row"><svg><use href="#i-mic"/></svg><div><h3>Voice without another subscription</h3><p>Whisper runs entirely on-device after a one-time model download. Audio is never sent to a speech service. Only the transcript enters your chat. Spoken replies use local system voices, when available.</p></div></div>
+      <p class="info-note">Make WALL-G your own: edit <code>SOUL.md</code>, then send another message. No restart needed.</p>
+      <button class="primary-button" data-close="info-dialog">Back to the possibilities</button>
+    </dialog>
 
-      <p class="footnote">
-        A workshop starter for the
-        <a
-          href="https://hermes-workshop-guide.vercel.app/"
-          target="_blank"
-          rel="noopener"
-          >IPN AI Youth Summit</a
-        >
-        — yours to build on.
-      </p>
-    </main>
-
-    <script src="app.js"></script>
+    <dialog id="edit-dialog" class="edit-dialog" aria-labelledby="edit-title">
+      <h2 id="edit-title">Rename conversation</h2><form id="edit-form"><label for="chat-name">Conversation name</label><input id="chat-name" maxlength="80" required autocomplete="off"/><div class="dialog-actions"><button type="button" class="text-button" data-close="edit-dialog">Cancel</button><button type="submit" class="primary-button">Save name</button></div></form>
+    </dialog>
+    <dialog id="delete-dialog" class="edit-dialog" aria-labelledby="delete-title">
+      <h2 id="delete-title">Delete this conversation?</h2><p>This removes it from this browser only. Hermes memory and saved files are not deleted.</p><div class="dialog-actions"><button class="text-button" data-close="delete-dialog">Keep it</button><button id="confirm-delete" class="primary-button destructive">Delete from browser</button></div>
+    </dialog>
   </body>
 </html>

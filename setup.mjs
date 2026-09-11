@@ -42,7 +42,9 @@ const FREE_MODELS = [
 
 // When an OpenAI key is present we prefer OpenAI (faster, more capable). This is
 // the model we select; the free models above become the fallback chain.
-const OPENAI_MODEL = "gpt-4o-mini";
+// gpt-5.4-mini: current-gen mini — cheap, fast under concurrent load, and a
+// strong, reliable tool-caller, which is what we showcase at the workshop.
+const OPENAI_MODEL = "gpt-5.4-mini";
 
 // Run a `hermes ...` command, making sure the usual install folder is on PATH
 // even if the user hasn't reloaded their shell yet. Returns {ok, out}.

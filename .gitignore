@@ -4,6 +4,9 @@
 # Dependencies
 node_modules/
 
+# Private chat uploads and metadata
+.local/
+
 # Logs
 *.log
 npm-debug.log*

@@ -1,15 +1,17 @@
 {
-  "name": "hermes-workshop-bot",
+  "name": "wall-g",
   "version": "2.0.0",
-  "description": "A web chat UI for your own local Hermes agent — the workshop starter you clone and build on.",
+  "description": "WALL-G: your own chat workspace, powered by Hermes, with streaming, files, and local Whisper voice.",
   "type": "module",
   "main": "server.js",
   "scripts": {
     "setup": "node setup.mjs",
     "predev": "node setup.mjs",
     "dev": "node server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "node --test test/*.test.mjs"
   },
+  "engines": { "node": ">=22.13.0" },
   "keywords": [
     "ai",
     "hermes",
@@ -19,11 +21,17 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "@highlightjs/cdn-assets": "11.11.1",
+    "@huggingface/transformers": "3.8.1",
+    "dompurify": "3.4.15",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "openai": "^4.77.0"
+    "marked": "18.0.12",
+    "pdf-parse": "2.4.5",
+    "sharp": "0.35.4"
   },
   "overrides": {
-    "qs": "^6.16.0"
+    "qs": "^6.16.0",
+    "sharp": "$sharp"
   }
 }
