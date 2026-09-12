@@ -92,7 +92,10 @@ npm run dev
 before setup finished, stop it with **Ctrl+C** in Terminal 1 and run
 `hermes gateway` again so it reads the new settings.
 
-Open **http://localhost:3000** and send **"Reply only with: WALL-G is ready."**
+Open the **http://localhost:…** address printed on the "WALL-G is running at…"
+line (usually **http://localhost:3000**; if that port is already in use, WALL-G
+automatically moves to the next free one, like 3001, and prints it). Send
+**"Reply only with: WALL-G is ready."**
 A real reply means you're ready; the welcome message alone doesn't count.
 **Connected** only means the gateway is reachable, not that authentication or
 the selected model works. Sending a message checks those too.

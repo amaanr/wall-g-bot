@@ -324,16 +324,40 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   try {
     const settings = loadSettings();
     const app = await createApp(settings);
-    const server = app.listen(settings.port, "127.0.0.1", () => {
-      console.log(`WALL-G is running at http://localhost:${server.address().port}`);
-      console.log("Keep hermes gateway running in another terminal.");
-    });
-    server.requestTimeout = 60_000;
-    server.headersTimeout = 15_000;
-    server.on("error", (error) => {
-      console.error(error.code === "EADDRINUSE" ? "That local port is already in use. Choose another PORT." : "Could not start the local server.");
-      process.exitCode = 1;
-    });
+    // A leftover copy on the usual port shouldn't block a beginner. If the
+    // requested port is busy, quietly try the next one (3000 → 3001 → 3002 …)
+    // and print the address we actually landed on, so people always know where
+    // to look. PORT=0 (used by tests) asks the OS for any free port, so there's
+    // nothing to retry there.
+    const requested = settings.port;
+    const MAX_PORT_TRIES = 20;
+    let attempt = 0;
+    const start = (port) => {
+      const server = app.listen(port, "127.0.0.1", () => {
+        const actual = server.address().port;
+        if (requested && actual !== requested) {
+          console.log(`Port ${requested} was busy, so WALL-G moved to ${actual}.`);
+        }
+        console.log(`WALL-G is running at http://localhost:${actual}`);
+        console.log("Keep hermes gateway running in another terminal.");
+      });
+      server.requestTimeout = 60_000;
+      server.headersTimeout = 15_000;
+      server.on("error", (error) => {
+        if (error.code === "EADDRINUSE" && requested && attempt < MAX_PORT_TRIES) {
+          attempt += 1;
+          start(requested + attempt);
+          return;
+        }
+        console.error(
+          error.code === "EADDRINUSE"
+            ? `Ports ${requested}–${requested + attempt} are all in use. Close some old terminal windows and try again, or set a different PORT in .env.`
+            : "Could not start the local server.",
+        );
+        process.exitCode = 1;
+      });
+    };
+    start(requested);
   } catch (error) {
     console.error(error instanceof ApiError ? error.message : "Could not start WALL-G. Check the local settings and upload folder permissions.");
     process.exitCode = 1;
